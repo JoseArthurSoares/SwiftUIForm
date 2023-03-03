@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41C3A6BE29B226D400023ED2 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3A6BD29B226D400023ED2 /* SettingStore.swift */; };
 		41D6D15429AFD6FC0012E81C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D6D15329AFD6FC0012E81C /* SettingView.swift */; };
 		F4741DD124ED67BE00F16863 /* SwiftUIFormApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4741DD024ED67BE00F16863 /* SwiftUIFormApp.swift */; };
 		F4741DD324ED67BE00F16863 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4741DD224ED67BE00F16863 /* ContentView.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41C3A6BD29B226D400023ED2 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		41D6D15329AFD6FC0012E81C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		F4741DCD24ED67BE00F16863 /* SwiftUIForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4741DD024ED67BE00F16863 /* SwiftUIFormApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIFormApp.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				F4741DD924ED67C100F16863 /* Info.plist */,
 				F4741DD624ED67C100F16863 /* Preview Content */,
 				41D6D15329AFD6FC0012E81C /* SettingView.swift */,
+				41C3A6BD29B226D400023ED2 /* SettingStore.swift */,
 			);
 			path = SwiftUIForm;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41C3A6BE29B226D400023ED2 /* SettingStore.swift in Sources */,
 				41D6D15429AFD6FC0012E81C /* SettingView.swift in Sources */,
 				F4741DD324ED67BE00F16863 /* ContentView.swift in Sources */,
 				F4741DD124ED67BE00F16863 /* SwiftUIFormApp.swift in Sources */,

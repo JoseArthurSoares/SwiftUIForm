@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingView: View {
-    private var displayOrder = ["Ordem alfabética", "Mostrar os favoritos primeiro", "Mostrar Check-in primeiro"]
-    @State private var ordemSelecionada = 0
+    var settingStore: SettingStore
+    @State private var selectedOrder = DisplayOrderType.alphabetical
     @State private var showCheckInOnly = false
     @State private var maxPriceLevel = 5
     @Environment(\.presentationMode) var presentationMode
@@ -18,9 +18,9 @@ struct SettingView: View {
         NavigationView {
             Form {
                 Section(header: Text("SORT PREFERENCE")) {
-                    Picker(selection: $ordemSelecionada, label: Text("Ordenar por:")) {
-                        ForEach(0..<displayOrder.count, id: \.self) {
-                            Text(self.displayOrder[$0])
+                    Picker(selection: $selectedOrder, label: Text("Ordenar por:")) {
+                        ForEach(DisplayOrderType.allCases, id: \.self) { orderType in
+                            Text(orderType.text)
                         }
                     }
                 }
@@ -57,6 +57,9 @@ struct SettingView: View {
                     Spacer()
                     
                     Button(action: {
+                        self.settingStore.showCheckInOnly = self.showCheckInOnly
+                        self.settingStore.displayOrder = self.selectedOrder
+                        self.settingStore.maxPriceLevel = self.maxPriceLevel
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Salvar")
@@ -67,11 +70,16 @@ struct SettingView: View {
                 Spacer()
             }
         )
+        .onAppear {
+            self.selectedOrder = self.settingStore.displayOrder
+            self.showCheckInOnly = self.settingStore.showCheckInOnly
+            self.maxPriceLevel = self.settingStore.maxPriceLevel
+        }
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView()
+        SettingView(settingStore: SettingStore())
     }
 }
