@@ -13,7 +13,7 @@ struct SwiftUIFormApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(settingStore: settingStore)
+            ContentView().environmentObject(SettingStore())
         }
     }
 }

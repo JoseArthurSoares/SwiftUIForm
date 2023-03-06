@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    var settingStore: SettingStore
+    @EnvironmentObject var settingStore: SettingStore
     @State private var selectedOrder = DisplayOrderType.alphabetical
     @State private var showCheckInOnly = false
     @State private var maxPriceLevel = 5
@@ -17,14 +17,14 @@ struct SettingView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("SORT PREFERENCE")) {
+                Section(header: Text("preferência de ordenação")) {
                     Picker(selection: $selectedOrder, label: Text("Ordenar por:")) {
                         ForEach(DisplayOrderType.allCases, id: \.self) { orderType in
                             Text(orderType.text)
                         }
                     }
                 }
-                Section(header: Text("FILTER PREFERENCE")) {
+                Section(header: Text("preferência de filtros")) {
                     Toggle(isOn: $showCheckInOnly) {
                             Text("Mostrar somente Check-in")
                     }
@@ -80,6 +80,6 @@ struct SettingView: View {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(settingStore: SettingStore())
+        SettingView().environmentObject(SettingStore())
     }
 }

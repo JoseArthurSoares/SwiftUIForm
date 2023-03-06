@@ -36,56 +36,59 @@ struct ContentView: View {
 
     @State private var selectedRestaurant: Restaurant?
     @State private var showSettings: Bool = false
-    var settingStore: SettingStore
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(restaurants) { restaurant in
-                    BasicImageRow(restaurant: restaurant)
-                        .contextMenu {
-                            
-                            Button(action: {
-                                // mark the selected restaurant as check-in
-                                self.checkIn(item: restaurant)
-                            }) {
-                                HStack {
-                                    Text("Check-in")
-                                    Image(systemName: "checkmark.seal.fill")
-                                }
-                            }
-                            
-                            Button(action: {
-                                // delete the selected restaurant
-                                self.delete(item: restaurant)
-                            }) {
-                                HStack {
-                                    Text("Delete")
-                                    Image(systemName: "trash")
-                                }
-                            }
-                                             
-                            Button(action: {
-                                // mark the selected restaurant as favorite
-                                self.setFavorite(item: restaurant)
+                ForEach(restaurants.sorted(by: self.settingStore.displayOrder.predicate())) { restaurant in
+                    if mostrarItem(restaurante: restaurant){
+                        BasicImageRow(restaurant: restaurant)
+                        
+                            .contextMenu {
                                 
-                            }) {
-                                HStack {
-                                    Text("Favorite")
-                                    Image(systemName: "star")
+                                Button(action: {
+                                    // mark the selected restaurant as check-in
+                                    self.checkIn(item: restaurant)
+                                }) {
+                                    HStack {
+                                        Text("Check-in")
+                                        Image(systemName: "checkmark.seal.fill")
+                                    }
+                                }
+                                
+                                Button(action: {
+                                    // delete the selected restaurant
+                                    self.delete(item: restaurant)
+                                }) {
+                                    HStack {
+                                        Text("Delete")
+                                        Image(systemName: "trash")
+                                    }
+                                }
+                                
+                                Button(action: {
+                                    // mark the selected restaurant as favorite
+                                    self.setFavorite(item: restaurant)
+                                    
+                                }) {
+                                    HStack {
+                                        Text("Favorite")
+                                        Image(systemName: "star")
+                                    }
                                 }
                             }
-                        }
-                        .onTapGesture {
-                            self.selectedRestaurant = restaurant
-                        }
+                            .onTapGesture {
+                                self.selectedRestaurant = restaurant
+                            }
+                    }
                 }
                 .onDelete { (indexSet) in
                     self.restaurants.remove(atOffsets: indexSet)
                 }
             }
             
-            .navigationBarTitle("Restaurant")
+            .navigationBarTitle("Restaurantes")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -95,7 +98,7 @@ struct ContentView: View {
                             .foregroundColor(.secondary)
                     })
                     .sheet(isPresented: $showSettings) {
-                        SettingView(settingStore: SettingStore())
+                        SettingView().environmentObject(self.settingStore)
                     }
                 }
             }
@@ -121,11 +124,20 @@ struct ContentView: View {
             self.restaurants[index].isCheckIn.toggle()
         }
     }
+    
+    private func mostrarItem(restaurante: Restaurant) -> Bool{
+        if self.settingStore.showCheckInOnly == false {
+            return (restaurante.priceLevel <= self.settingStore.maxPriceLevel)
+        } else {
+            return (restaurante.priceLevel <= self.settingStore.maxPriceLevel) && (restaurante.isCheckIn)
+        }
+    }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(settingStore: SettingStore())
+        ContentView().environmentObject(SettingStore())
     }
 }
 
@@ -190,8 +202,8 @@ struct BasicImageRow: View {
                     .foregroundColor(.yellow)
                 }
             }
-            
         
     }
 }
+
 
